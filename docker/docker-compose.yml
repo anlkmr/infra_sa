@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  postgres:
+    extends:
+      file: /postgresql/docker-compose-pg-only.yml
+      service: postgres
+  rabbitmq:
+    extends:
+      file: /rabbitmq/docker-compose-rabbitmq.yml
+      service: rabbitmq
+  mongodb:
+    extends:
+      file: /mongodb/docker-compose-mongo.yml
+      service: mongodb
+  kafka:
+    extends:
+      file: /kafka/docker-compose-kafka.yml
+      service: kafka
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  zookeeper:
+    extends:
+      file: /kafka/docker-compose-kafka.yml
+      service: zookeeper
+volumes:
+  db:
+    driver: local
